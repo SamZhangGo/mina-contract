@@ -1,0 +1,32 @@
+{
+  "0x0101": [
+    [
+      {
+        "name": "shortParam",
+        "size": 2,
+        "type": "Short",
+        "func": "Normal"
+      },
+      {
+        "name": "LoopCount",
+        "size": 2,
+        "type": "Short",
+        "func": "Loop"
+      },
+      [
+        {
+          "name": "intParam",
+          "size": 4,
+          "type": "Int",
+          "func": "Normal"
+        },
+        {
+          "name": "shortParam",
+          "size": 2,
+          "type": "Short",
+          "func": "Normal"
+        }
+      ]
+    ]
+  ]
+}

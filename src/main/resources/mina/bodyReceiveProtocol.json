@@ -1,0 +1,30 @@
+{
+  "0x0101": [
+    [
+      {
+        "name": "stringParam",
+        "size": 100,
+        "type": "ByteArray",
+        "func": "Normal"
+      },
+      {
+        "name": "longParam",
+        "size": 8,
+        "type": "Long",
+        "func": "Normal"
+      },
+      {
+        "name": "tmpId",
+        "size": 4,
+        "type": "Int",
+        "func": "Normal"
+      },
+      {
+        "name": "port",
+        "size": 2,
+        "type": "Short",
+        "func": "Normal"
+      }
+    ]
+  ]
+}

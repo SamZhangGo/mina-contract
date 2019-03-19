@@ -6,7 +6,7 @@
 
   <groupId>org.dawndreamer</groupId>
   <artifactId>mina-contract</artifactId>
-  <version>1.21</version>
+  <version>1.0</version>
 
   <dependencies>
     <dependency>

@@ -1,0 +1,9 @@
+@startuml
+box "Encoder Procession"
+[->MinaCodecEncoderChain:message object
+loop 尝试用Encoder进行解析，直至解析成功，
+  MinaCodecEncoderChain -> MinaCodecBodyEncoder:encode(IoBuffer buffer, Object object)
+  MinaCodecBodyEncoder --> MinaCodecEncoderChain:true
+  MinaCodecEncoderChain -> MinaCodecEncoderChain:write(buffer)
+end
+@enduml

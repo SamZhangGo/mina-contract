@@ -1,0 +1,21 @@
+@startuml
+box "Decoder Procession"
+[->MinaCodecDecoderChain:byte message
+MinaCodecDecoderChain -> ByteContractFactory:assembleHeader(IoBuffer in)
+activate MinaCodecDecoderChain #DarkSalmon
+ByteContractFactory -> GeneralSegmentDecoder:decodeSegment(IoBuffer in, ByteContractProtocolSegment segment)
+activate ByteContractFactory #DarkSalmon
+GeneralSegmentDecoder-->ByteContractFactory : headerSegment
+deactivate ByteContractFactory
+ByteContractFactory --> MinaCodecDecoderChain : headerData
+deactivate MinaCodecDecoderChain
+MinaCodecDecoderChain -> MinaCodecDecoderChain: get protocal handler and length from headData
+activate MinaCodecDecoderChain #DarkSalmon
+deactivate MinaCodecDecoderChain
+loop 尝试用Decoder进行解析，直至解析成功，写回ProtocalDecoderOutput
+  MinaCodecDecoderChain -> MinaCodecBodyDecoder:doDecodeBody(IoSession session, short handler, int contentLength, IoBuffer in)
+  MinaCodecBodyDecoder --> MinaCodecDecoderChain:bodyData
+  MinaCodecDecoderChain -> MinaCodecBodyDecoder:writeObjectToSession(IoSession session, ProtocolDecoderOutput output,ByteContractSegmentData headerData, Object bodyData)
+end
+end box
+@enduml

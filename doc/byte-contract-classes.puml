@@ -1,0 +1,84 @@
+@startuml
+package "element.protocol" {
+  interface ByteContractElement {
+      String getName()
+      int getContentLength()
+  }
+  abstract class AbstractByteContractProtocolElement {
+    #String name
+    + String getName()
+    + void setName(name:String)
+  }
+  class ByteContractProtocolSegment {
+    - int length
+    - List<ByteContractElement> content
+    + ByteContractProtocolSegment parseSegment(JSONArray array)
+    + void addElement(ByteContractElement ele)
+    + int getContentLength()
+    + boolean isLengthConst()
+    + int getRealContentLength(JSONObject segmentData)
+  }
+  note left
+  由多个Field或者多个Segment组成，
+  支持嵌套定义
+  end note
+  class ByteContractProtocolField {
+    - int size
+    - DataEnum type
+    - String desc
+    - FuncEnum func
+  }
+  note top
+   {
+      "name":, //字段名
+      "size":, //字节大小
+      "type": ,//数据类型 int、short 、long、array
+      "func": //字段作用，1.正常占位normal
+              //2.标识下一个元素的循环个数 loop
+   }
+  end note
+  class ByteContractProtocolHeader
+  class ByteContractProtocolBody
+  AbstractByteContractProtocolElement <|-- ByteContractElement
+  ByteContractProtocolSegment <|-- AbstractByteContractProtocolElement
+  ByteContractProtocolField <|-- AbstractByteContractProtocolElement
+  ByteContractProtocolHeader <|-- ByteContractProtocolSegment
+  ByteContractProtocolBody <|-- ByteContractProtocolSegment
+
+  enum DataEnum {
+    Int
+    Short
+    Long
+    ByteArray
+
+  DataEnum(String name)
+  }
+
+  enum FuncEnum {
+    Normal
+    Loop
+  }
+
+  enum ProtocolEnum {
+    SEND
+    RECEIVE
+  }
+
+  ByteContractProtocolField --> DataEnum
+  ByteContractProtocolField --> FuncEnum
+  ByteContractProtocolSegment "1" *--> "n" ByteContractElement:contains
+
+}
+package "element.data" #DDDDDD{
+  class ByteContract {
+    - JSONObject header
+    - JSONObject body
+  }
+  Class JSONObject
+  class ByteContractSegmentData {
+    + void addArrayElement(String name, Object object)
+  }
+  ByteContractSegmentData --|> JSONObject
+}
+
+@enduml
